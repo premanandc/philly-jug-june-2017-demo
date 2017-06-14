@@ -8,16 +8,16 @@ This application makes of the following design patterns:
 - Command Query Responsibility Segregation (CQRS)
 - Event Sourcing
 
-# Building
+## Building
 To create a standard spring boot executable jar
 > mvn clean install
 
-# Running
+## Running
 > mvn spring-boot:run
 
 Browse to http://localhost:8080/customers
 
-# References
+## References
 * Axon Framework - http://www.axonframework.org/
 * Spring Boot - http://projects.spring.io/spring-boot/
 * Spring Framework - http://projects.spring.io/spring-framework/
