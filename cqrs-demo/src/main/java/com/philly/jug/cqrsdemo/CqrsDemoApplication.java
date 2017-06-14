@@ -2,8 +2,17 @@ package com.philly.jug.cqrsdemo;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventHandler;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.ExchangeBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +30,27 @@ public class CqrsDemoApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(CqrsDemoApplication.class, args);
+  }
+
+  @Bean
+  public Exchange exchange(@Value("${axon.amqp.exchange}") String name, AmqpAdmin admin) {
+    Exchange exchange = ExchangeBuilder.topicExchange(name).durable(true).build();
+    admin.declareExchange(exchange);
+    return exchange;
+  }
+
+  @Bean
+  public Queue queue(AmqpAdmin admin) {
+    Queue queue = QueueBuilder.durable("CustomersQueue").build();
+    admin.declareQueue(queue);
+    return queue;
+  }
+
+  @Bean
+  public Binding binding(Exchange exchange, Queue queue, AmqpAdmin admin) {
+    Binding binding = BindingBuilder.bind(queue).to(exchange).with("#").noargs();
+    admin.declareBinding(binding);
+    return binding;
   }
 
   @Component
