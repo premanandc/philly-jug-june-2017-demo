@@ -13,6 +13,9 @@ public class Customer {
   @AggregateIdentifier
   private String id;
 
+  private Customer() {
+  }
+
   @CommandHandler
   public Customer(RegisterCustomerCommand command) {
     Assert.hasLength(command.getFirstName(), "Need a first name!");
