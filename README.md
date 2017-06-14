@@ -13,7 +13,19 @@ To create a standard spring boot executable jar
 > mvn clean install
 
 ## Running
+Make sure a default instance of rabbitmq is running.
+
+On a mac:
+> brew install rabbitmq
+> brew services start rabbitmq
+
+To run the application:
 > mvn spring-boot:run
+
+OR
+
+> mvn clean package
+> java -jar target/cqrs-demo-0.0.1-SNAPSHOT.jar
 
 Browse to http://localhost:8080/customers
 

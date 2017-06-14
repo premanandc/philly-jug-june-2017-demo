@@ -24,6 +24,6 @@ public class CustomerTest {
   public void shouldRegisterCustomerWithAValidFirstAndLastName() throws Exception {
     fixture.given()
         .when(new RegisterCustomerCommand("id", "first", "last"))
-        .expectEvents(new CustomerRegisteredEvent("id", "first", "las"));
+        .expectEvents(new CustomerRegisteredEvent("id", "first", "last"));
   }
 }
